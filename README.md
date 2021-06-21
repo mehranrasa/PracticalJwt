@@ -8,7 +8,7 @@ Real world jwt example with rotating refresh tokens & encrypted payload
 
 • EFCore (Sqlite db)
 
-• JWT Tokens (with payload encyription)
+• JWT Tokens (with payload encyription, token refresh)
 
 • CQRS Pattern (with MediatR)
 
