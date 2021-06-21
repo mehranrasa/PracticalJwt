@@ -1,5 +1,5 @@
 # PracticalJwt
-Real world jwt example with rotating refresh tokens & encrypted jwt payload
+Real world jwt example with rotating refresh tokens & encrypted payload
 
 # Technologies, Tools, Patterns used :
 • Simple Domain Driven Design
