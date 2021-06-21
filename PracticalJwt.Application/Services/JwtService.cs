@@ -4,7 +4,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PracticalJwt.Application.Services
 {
@@ -77,7 +76,7 @@ namespace PracticalJwt.Application.Services
                     Username = claims.Identity.Name
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var a = e;
                 return null;

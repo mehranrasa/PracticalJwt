@@ -53,7 +53,7 @@ namespace PracticalJwt.Application
             var token = _jwtService.GenerateToken(user.Username);
 
             if (await _userRepository.UpdateUserRefreshToken(user, token.RefreshToken, token.RefreshTokenExpirationTime))
-            { 
+            {
                 return new LoginResult()
                 {
                     InvalidUserPass = false,
@@ -97,7 +97,7 @@ namespace PracticalJwt.Application
             //validate refresh token
             var user = await _userRepository.Get(decryptedToken.Username, loadRefreshTokens: true);
             var currentUserRefreshToken = user.RefreshToken;
-            if 
+            if
             (
                 (user == null) ||
                 (!currentUserRefreshToken.Token.Equals(refreshToken)) ||

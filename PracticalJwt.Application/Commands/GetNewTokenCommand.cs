@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Newtonsoft.Json;
 using PracticalJwt.Application.Dtos;
 using PracticalJwt.Application.Services;
 using System;

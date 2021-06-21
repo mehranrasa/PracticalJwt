@@ -1,13 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PracticalJwt.Application.Commands;
 using PracticalJwt.Application.Dtos;
 using PracticalJwt.Application.Queries;
-using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
