@@ -2,7 +2,7 @@
 Real world jwt example with rotating refresh tokens & encrypted payload
 
 # Technologies, Tools, Patterns used :
-• aspnetcore 3.1
+• ASP.NET Core 3.1
 
 • Simple Domain Driven Design
 
