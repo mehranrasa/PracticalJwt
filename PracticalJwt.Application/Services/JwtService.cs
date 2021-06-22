@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using PracticalJwt.Domain.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ namespace PracticalJwt.Application.Services
 {
     public interface IJwtService
     {
-        JwtTokenResult GenerateToken(string username);
+        JwtTokenResult GenerateToken(string username, Role role);
 
         DecodedTokenResult DecryptToken(string accessToken);
     }
@@ -41,11 +42,11 @@ namespace PracticalJwt.Application.Services
             _encryptCerd = new EncryptingCredentials(_key, SecurityAlgorithms.Aes256KW, SecurityAlgorithms.Aes256CbcHmacSha512);
         }
 
-        public JwtTokenResult GenerateToken(string username)
+        public JwtTokenResult GenerateToken(string username, Role role)
         {
             return new JwtTokenResult()
             {
-                AccessToken = generateAccessToken(username),
+                AccessToken = generateAccessToken(username, role),
                 RefreshToken = generateRefreshToken(username),
                 RefreshTokenExpirationTime = DateTime.UtcNow.AddDays(_refreshTokenExpirationDays)
             };
@@ -84,12 +85,13 @@ namespace PracticalJwt.Application.Services
         }
 
 
-        private string generateAccessToken(string username)
+        private string generateAccessToken(string username, Role role)
         {
+            var roleStr = Enum.GetName(typeof(Role), role);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, username)/*,
-                new Claim(ClaimTypes.Role, "")*/
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, roleStr)
             };
 
             //encrypted jwt

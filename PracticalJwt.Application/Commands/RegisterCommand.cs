@@ -20,6 +20,9 @@ namespace PracticalJwt.Application.Commands
 
         [JsonProperty("age")]
         public int Age { get; set; }
+
+        [JsonProperty("role")]
+        public int Role { get; set; }
     }
 
     public class RegistrationCommandHandler : IRequestHandler<RegisterCommand, ResponseDto>
@@ -42,7 +45,8 @@ namespace PracticalJwt.Application.Commands
             {
                 Username = request.Username,
                 Password = request.Password,
-                Age = request.Age
+                Age = request.Age,
+                UserRole = (Role)request.Role
             });
 
             if (createdUser == null)

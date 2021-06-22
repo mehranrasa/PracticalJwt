@@ -17,10 +17,9 @@ namespace PracticalJwt.Application.Repositories
         Task<User> Get(int userID);
         Task<User> Get(string username, bool loadRefreshTokens = false);
 
-        Task<int> GetUserAge(int userId);
-        Task<int> GetUserAge(string username);
+        Task<bool> UpdateRefreshToken(User user, string refreshToken, DateTime expiresAt);
 
-        Task<bool> UpdateUserRefreshToken(User user, string refreshToken, DateTime expiresAt);
+        Task<bool> Update(User changedUser);
     }
 
     public class UserRepository : IUserRepository
@@ -70,20 +69,7 @@ namespace PracticalJwt.Application.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<int> GetUserAge(int userId)
-        {
-            var user = await _appDbContext.Users.Where(u => u.ID == userId).FirstOrDefaultAsync();
-            return user.Age;
-        }
-
-        public async Task<int> GetUserAge(string username)
-        {
-            var user = await _appDbContext.Users.Where(u =>
-                u.Username.ToLower().Equals(username.ToLower())).FirstOrDefaultAsync();
-            return user.Age;
-        }
-
-        public async Task<bool> UpdateUserRefreshToken(User user, string newRefreshToken, DateTime expiresAt)
+        public async Task<bool> UpdateRefreshToken(User user, string newRefreshToken, DateTime expiresAt)
         {
             var lastRefreshToken = await _appDbContext.RefreshTokens.SingleOrDefaultAsync(r => r.UserId == user.ID);
 
@@ -103,6 +89,13 @@ namespace PracticalJwt.Application.Repositories
             user.RefreshToken = lastRefreshToken;
             await _appDbContext.SaveChangesAsync();
 
+            return true;
+        }
+
+        public async Task<bool> Update(User changedUser)
+        {
+            _appDbContext.Update(changedUser);
+            await _appDbContext.SaveChangesAsync();
             return true;
         }
     }

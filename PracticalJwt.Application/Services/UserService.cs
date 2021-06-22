@@ -17,6 +17,8 @@ namespace PracticalJwt.Application
 
         Task<User> Register(User user);
 
+        Task<bool> Deactivate(int userId);
+
         Task<TokenResult> RefreshToken(string accessToken, string refreshToken);
     }
 
@@ -37,6 +39,7 @@ namespace PracticalJwt.Application
         {
             //encrypt password
             user.Password = pwHelper.Encrypt(user.Password);
+            user.IsActive = true;
             var createdUser = await _userRepository.Create(user);
             return createdUser;
         }
@@ -50,9 +53,9 @@ namespace PracticalJwt.Application
                 return new LoginResult() { InvalidUserPass = true, Token = null };
 
             //generate a token
-            var token = _jwtService.GenerateToken(user.Username);
+            var token = _jwtService.GenerateToken(user.Username, user.UserRole);
 
-            if (await _userRepository.UpdateUserRefreshToken(user, token.RefreshToken, token.RefreshTokenExpirationTime))
+            if (await _userRepository.UpdateRefreshToken(user, token.RefreshToken, token.RefreshTokenExpirationTime))
             {
                 return new LoginResult()
                 {
@@ -71,10 +74,10 @@ namespace PracticalJwt.Application
         //login without check
         public async Task<LoginResult> Login(User user)
         {
-            var token = _jwtService.GenerateToken(user.Username);
+            var token = _jwtService.GenerateToken(user.Username, user.UserRole);
 
             //save refreshtoken
-            await _userRepository.UpdateUserRefreshToken(user, token.RefreshToken, token.RefreshTokenExpirationTime);
+            await _userRepository.UpdateRefreshToken(user, token.RefreshToken, token.RefreshTokenExpirationTime);
 
             return new LoginResult()
             {
@@ -106,10 +109,10 @@ namespace PracticalJwt.Application
                 return null;
 
             //generate new tokens
-            var tokens = _jwtService.GenerateToken(decryptedToken.Username);
+            var tokens = _jwtService.GenerateToken(decryptedToken.Username, user.UserRole);
 
             //update the user's refresh token
-            if (await _userRepository.UpdateUserRefreshToken(user, tokens.RefreshToken, tokens.RefreshTokenExpirationTime))
+            if (await _userRepository.UpdateRefreshToken(user, tokens.RefreshToken, tokens.RefreshTokenExpirationTime))
             {
                 return new TokenResult()
                 {
@@ -125,7 +128,18 @@ namespace PracticalJwt.Application
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> Deactivate(int userId)
+        {
+            var user = await _userRepository.Get(userId);
+            if (user == null)
+                return false;
+
+            user.IsActive = false;
+            return await _userRepository.Update(user);
+        }
     }
+
 
     public class TokenResult
     {
@@ -133,6 +147,7 @@ namespace PracticalJwt.Application
 
         public string RefreshToken { get; set; }
     }
+
 
     public class LoginResult
     {

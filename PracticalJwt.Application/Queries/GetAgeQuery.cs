@@ -27,10 +27,11 @@ namespace PracticalJwt.Application.Queries
 
         public async Task<ResponseDto> Handle(GetAgeQuery request, CancellationToken cancellationToken)
         {
+            var user = await _userRepository.Get(request.Username);
             return new ResponseDto()
             {
-                Succeed = true,
-                Result = await _userRepository.GetUserAge(request.Username)
+                Succeed = user != null,
+                Result = user.Age
             };
         }
     }

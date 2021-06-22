@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracticalJwt.Application.Data;
 
-namespace PracticalJwt.Application.Data.Migrations
+namespace PracticalJwt.Application.data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -51,8 +51,14 @@ namespace PracticalJwt.Application.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("UserRole")
+                        .HasColumnType("INT");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");

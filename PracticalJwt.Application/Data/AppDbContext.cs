@@ -13,7 +13,6 @@ namespace PracticalJwt.Application.Data
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder ob)
@@ -35,8 +34,9 @@ namespace PracticalJwt.Application.Data
                 .HasForeignKey<RefreshToken>(f => f.UserId);
 
             //sqlite uses string dates
-            mb.Entity<RefreshToken>().Property(p => p.ExpiresAt)
-                .HasConversion<DateTime>();
+            mb.Entity<RefreshToken>().Property(p => p.ExpiresAt).HasConversion<DateTime>();
+
+            mb.Entity<User>().Property(p => p.UserRole).HasColumnType("INT");
         }
     }
 }

@@ -16,13 +16,9 @@ Real world jwt example with rotating refresh tokens & encrypted payload
 
 # Still working on it... feel free to fork!
 I'm planning to work on :
-
 1 - a better way for storing secrets
 
-2 - logout action with a blacklist in-memory cache mechanisem
-
-3 - more roles and maybe customizing [Authorize] attribute
-
+2 - logout mechanism
 
 
 

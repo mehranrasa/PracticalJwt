@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracticalJwt.Application.Data;
 
-namespace PracticalJwt.Application.Data.Migrations
+namespace PracticalJwt.Application.data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210621095933_initMig")]
+    [Migration("20210622115004_initMig")]
     partial class initMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,8 +53,14 @@ namespace PracticalJwt.Application.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("UserRole")
+                        .HasColumnType("INT");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");

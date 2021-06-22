@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PracticalJwt.Application.Data.Migrations
+namespace PracticalJwt.Application.data.Migrations
 {
     public partial class initMig : Migration
     {
@@ -15,7 +15,9 @@ namespace PracticalJwt.Application.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    Age = table.Column<int>(nullable: false)
+                    Age = table.Column<int>(nullable: false),
+                    UserRole = table.Column<int>(type: "INT", nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
